@@ -1,0 +1,560 @@
+`
+1. Write a C++ program to manage the details of a book in a library. Create an object of the class and call displayDetails() function to display the
+book's information.
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Book {
+public:
+    string title;
+    string author;
+    string isbn;
+
+    void displayDetails() const {
+        cout << "Title: " << title << "\n";
+        cout << "Author: " << author << "\n";
+        cout << "ISBN: " << isbn << "\n";
+    }
+};
+
+int main() {
+    // Create a Book object and set its details
+    Book myBook;
+    myBook.title = "1984";
+    myBook.author = "George Orwell";
+    myBook.isbn = "9780451524935";
+
+    // Display the book's information
+    myBook.displayDetails();
+
+    return 0;
+}
+
+
+
+2. Write a C++ program to create an employee class containing following data members: employee name, employee number, basic, DA, IT, net salary and calculate the gross salary of the employee.
+
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Employee {
+private:
+    string name;       // Employee name
+    int empNumber;     // Employee number
+    double basic;      // Basic salary
+    double da;         // Dearness Allowance
+    double it;         // Income Tax
+
+public:
+    // Constructor to initialize employee details
+    Employee(string n, int num, double b) : name(n), empNumber(num), basic(b) {
+        da = 0.2 * basic; // 20% of basic as DA
+        it = 0.1 * basic; // 10% of basic as IT
+    }
+
+    // Function to calculate gross salary
+    double calculateGrossSalary() const {
+        return basic + da; // Gross salary = Basic + DA
+    }
+
+    // Function to calculate net salary
+    double calculateNetSalary() const {
+        return calculateGrossSalary() - it; // Net salary = Gross - IT
+    }
+
+    // Function to display employee details
+    void displayDetails() const {
+        cout << "Employee Name: " << name << endl;
+        cout << "Employee Number: " << empNumber << endl;
+        cout << "Basic Salary: $" << basic << endl;
+        cout << "Dearness Allowance (DA): $" << da << endl;
+        cout << "Income Tax (IT): $" << it << endl;
+        cout << "Gross Salary: $" << calculateGrossSalary() << endl;
+        cout << "Net Salary: $" << calculateNetSalary() << endl; // Display net salary
+    }
+};
+
+int main() {
+    // Create an Employee object
+    Employee emp("Alice Johnson", 101, 5000.00);
+
+    // Display employee details
+    emp.displayDetails();
+
+    return 0;
+}
+
+
+3. Write a C++ program to demonstrate hybrid inheritance
+
+
+#include <iostream>
+using namespace std;
+
+// Base class
+class Animal {
+public:
+    void eat() {
+        cout << "Animal eats food." << endl;
+    }
+};
+
+// Derived class from Animal
+class Mammal : public Animal {
+public:
+    void walk() {
+        cout << "Mammal walks on land." << endl;
+    }
+};
+
+// Derived class from Animal
+class Bird : public Animal {
+public:
+    void fly() {
+        cout << "Bird flies in the sky." << endl;
+    }
+};
+
+// Derived class from both Mammal and Bird
+class Bat : public Mammal, public Bird {
+public:
+    void sound() {
+        cout << "Bat makes sound." << endl;
+    }
+};
+
+int main() {
+    Bat bat;
+
+    // Accessing methods from the base and derived classes
+    bat.Mammal::eat();  // Call eat() from Animal via Mammal
+    bat.walk();         // From Mammal
+    bat.Bird::fly();    // Call fly() from Animal via Bird
+    bat.sound();        // From Bat
+
+    return 0;
+}
+
+
+4. Write a C++ program to illustrate function overloading in adding the distance between objects.
+
+
+
+
+#include <iostream>
+using namespace std;
+
+// Function to add distances in feet and inches
+void addDistance(int feet1, int inches1, int feet2, int inches2, int &resultFeet, int &resultInches) {
+    resultInches = inches1 + inches2; // Add inches
+    resultFeet = feet1 + feet2 + (resultInches / 12); // Convert excess inches to feet
+    resultInches %= 12; // Get remaining inches
+}
+
+// Function to add only feet
+void addDistanceFeet(int feet1, int feet2, int &resultFeet) {
+    resultFeet = feet1 + feet2; // Add feet
+}
+
+int main() {
+    int feet1 = 3, inches1 = 9; // First distance
+    int feet2 = 5, inches2 = 4; // Second distance
+    int resultFeet, resultInches;
+
+    // Adding both distances
+    addDistance(feet1, inches1, feet2, inches2, resultFeet, resultInches);
+    cout << "After adding the distances: " << resultFeet << " feet " << resultInches << " inches" << endl;
+
+    // Adding only feet
+    addDistanceFeet(feet1, feet2, resultFeet);
+    cout << "After adding only feet: " << resultFeet << " feet" << endl;
+
+    return 0;
+}
+
+
+
+5. Write a C++ program to create a class template to find the maximum of two numbers. The class template should work with different data types
+such as int and float. The program should include a member function that compares the two numbers and returns the maximum.
+
+
+#include <iostream>
+using namespace std;
+
+// Class template
+template <typename T>
+class MaxFinder {
+public:
+    // Member function to find the maximum of two numbers
+    T max(T a, T b) {
+        return (a > b) ? a : b;
+    }
+};
+
+int main() {
+    MaxFinder<int> intFinder;          // For integers
+    MaxFinder<float> floatFinder;      // For floats
+
+    int a = 5.2, b = 5.3;
+    float x = 5.5f, y = 5.3f;
+
+    // Finding maximum for integers
+    cout << "Maximum of " << a << " and " << b << " is " << intFinder.max(a, b) << endl;
+
+    // Finding maximum for floats
+    cout << "Maximum of " << x << " and " << y << " is " << floatFinder.max(x, y) << endl;
+
+    return 0;
+}
+
+
+
+6. Write a C++ program to create a function template that can perform various arithmetic operations, such as addition, subtraction, multiplication, and division on two operands. The program should accept different data types (such as int, float, and double) for the operands and demonstrate the use of the function template with at least two different data types.
+
+
+#include <iostream>
+using namespace std;
+
+// Function template for arithmetic operations
+template <typename T>
+T add(T a, T b) {
+    return a + b;
+}
+
+template <typename T>
+T subtract(T a, T b) {
+    return a - b;
+}
+
+template <typename T>
+T multiply(T a, T b) {
+    return a * b;
+}
+
+template <typename T>
+T divide(T a, T b) {
+    if (b != 0) {
+        return a / b; // Avoid division by zero
+    } else {
+        throw runtime_error("Division by zero error!");
+    }
+}
+
+int main() {
+    // Demonstrate with integers
+    int intA = 10, intB = 5;
+    cout << "Integer Operations:" << endl;
+    cout << "Addition: " << add(intA, intB) << endl;
+    cout << "Subtraction: " << subtract(intA, intB) << endl;
+    cout << "Multiplication: " << multiply(intA, intB) << endl;
+    cout << "Division: " << divide(intA, intB) << endl;
+
+    // Demonstrate with floats
+    float floatX = 5.5f, floatY = 2.2f;
+    cout << "\nFloat Operations:" << endl;
+    cout << "Addition: " << add(floatX, floatY) << endl;
+    cout << "Subtraction: " << subtract(floatX, floatY) << endl;
+    cout << "Multiplication: " << multiply(floatX, floatY) << endl;
+    cout << "Division: " << divide(floatX, floatY) << endl;
+
+    return 0;
+}
+
+
+
+7. i.) Write a C++ progam to demonstrate the use of friend function.
+ ii)Write a C++ program to demonstrate the exception handling.
+
+
+i)
+
+#include <iostream>
+using namespace std;
+
+class Box
+{
+private:
+    int length;
+public:
+    Box() : length(0) { }
+    // friend function
+    friend int printLength(Box);
+};
+
+int printLength(Box b)
+{
+    b.length = 10;
+    return b.length;
+}
+
+int main()
+{
+    Box b;
+    cout << "Length of box: " << printLength(b);
+    return 0;
+}
+
+
+
+
+
+ii)
+
+#include <iostream>
+using namespace std;
+
+// Function to perform division
+double divide(double numerator, double denominator) {
+    if (denominator == 0) {
+        throw runtime_error("Error: Division by zero!"); // Throw an exception if denominator is zero
+    }
+    return numerator / denominator; // Perform division
+}
+
+int main() {
+    double num1, num2;
+
+    cout << "Enter two numbers (numerator and denominator): ";
+    cin >> num1 >> num2;
+
+    try {
+        double result = divide(num1, num2); // Attempt to divide
+        cout << "Result: " << result << endl;
+    } catch (const runtime_error& e) {
+        cout << e.what() << endl; // Catch the exception and display the error message
+    }
+
+    return 0;
+}
+
+
+8. Write a C++ program using class to process shopping list for a departmental store. The list include the details such as the code number and price of each item and perform the operations like adding, deleting items to the list and printing the total value of a order.
+
+
+
+#include <iostream>
+#include <vector>
+
+using namespace std; // Use standard namespace
+
+class Item {
+public:
+    int code;
+    double price;
+
+    Item(int c, double p) : code(c), price(p) {} // Constructor
+};
+
+class ShoppingList {
+private:
+    vector<Item> items; // List of items
+
+public:
+    void addItem(int code, double price) {
+        items.push_back(Item(code, price)); // Add item
+    }
+
+    void deleteItem(int code) {
+        for (size_t i = 0; i < items.size(); ++i) {
+            if (items[i].code == code) {
+                items.erase(items.begin() + i); // Remove item
+                return;
+            }
+        }
+        cout << "Item with code " << code << " not found.\n";
+    }
+
+    double getTotalPrice() {
+        double total = 0;
+        for (const Item& item : items) {
+            total += item.price; // Sum prices
+        }
+        return total;
+    }
+
+    void displayList() {
+        if (items.empty()) {
+            cout << "Shopping list is empty.\n";
+            return;
+        }
+        cout << "Shopping List:\n";
+        for (const Item& item : items) {
+            cout << "Code: " << item.code << ", Price: $" << item.price << "\n";
+        }
+    }
+};
+
+int main() {
+    ShoppingList list;
+    int choice, code;
+    double price;
+
+    do {
+        cout << "\nMenu:\n";
+        cout << "1. Add Item\n";
+        cout << "2. Delete Item\n";
+        cout << "3. List Items\n";
+        cout << "4. Total Price\n";
+        cout << "5. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter item code: ";
+                cin >> code;
+                cout << "Enter item price: ";
+                cin >> price;
+                list.addItem(code, price);
+                break;
+            case 2:
+                cout << "Enter item code to delete: ";
+                cin >> code;
+                list.deleteItem(code);
+                break;
+            case 3:
+                list.displayList();
+                break;
+            case 4:
+                cout << "Total Price: $" << list.getTotalPrice() << "\n";
+                break;
+            case 5:
+                cout << "Exiting the program.\n";
+                break;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+        }
+    } while (choice != 5);
+
+    return 0;
+}
+
+
+
+9. Write a C++ program to overload unary operator as i) member function
+ii) friend function.
+
+
+i)
+
+#include <iostream>
+using namespace std;
+
+class Number {
+private:
+    int value;
+
+public:
+    // Constructor to initialize value
+    Number(int v = 0) : value(v) {}
+
+    // Overloading unary operator - as a member function
+    Number operator-() {
+        return Number(-value); // Return the negated value
+    }
+
+    // Function to display the value
+    void display() const {
+        cout << "Value: " << value << endl;
+    }
+};
+
+int main() {
+    Number num(10); // Create a Number object with initial value
+    num.display();   // Display initial value
+
+    Number negatedNum = -num; // Use overloaded - operator
+    negatedNum.display();      // Display negated value
+
+    return 0;
+}
+
+
+ii)
+
+#include <iostream>
+using namespace std;
+
+class Number {
+private:
+    int value;
+
+public:
+    // Constructor to initialize value
+    Number(int v = 0) : value(v) {}
+
+    // Friend function to overload unary operator -
+    friend Number operator-(const Number &n);
+
+    // Function to display the value
+    void display() const {
+        cout << "Value: " << value << endl;
+    }
+};
+
+// Overloaded friend function
+Number operator-(const Number &n) {
+    return Number(-n.value); // Return the negated value
+}
+
+int main() {
+    Number num(10); // Create a Number object with initial value
+    num.display();   // Display initial value
+
+    Number negatedNum = -num; // Use overloaded - operator
+    negatedNum.display();      // Display negated value
+
+    return 0;
+}
+
+
+10. Write a C++ program to perform the addition and subtraction of two complex numbers using the binary (+) and (-) operator.
+
+
+#include <iostream>
+using namespace std;
+
+class Complex {
+private:
+    float real;   // Real part
+    float imaginary; // Imaginary part
+
+public:
+    // Constructor to initialize complex number
+    Complex(float r = 0, float i = 0) : real(r), imaginary(i) {}
+
+    // Overloading the + operator
+    Complex operator+(const Complex& other) {
+        return Complex(real + other.real, imaginary + other.imaginary);
+    }
+
+    // Overloading the - operator
+    Complex operator-(const Complex& other) {
+        return Complex(real - other.real, imaginary - other.imaginary);
+    }
+
+    // Function to display the complex number
+    void display() const {
+        cout << real << " + " << imaginary << "i" << endl;
+    }
+};
+
+int main() {
+    Complex num1(3.5, 2.5); // First complex number
+    Complex num2(1.5, 4.5); // Second complex number
+
+    Complex sum = num1 + num2;      // Adding complex numbers
+    Complex difference = num1 - num2; // Subtracting complex numbers
+
+    cout << "Sum: ";
+    sum.display(); // Display the sum
+
+    cout << "Difference: ";
+    difference.display(); // Display the difference
+
+    return 0;
+}
