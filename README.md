@@ -29,7 +29,8 @@ How to Run
 1.	Clone this repository to your local machine.
 2.	Open each .cpp file in your preferred C++ IDE or text editor.
 3.	Compile and run the program using your compiler (e.g., g++).
-# Example for compiling and running a program in terminal
+
 g++ program_name.cpp -o program_name
+
 ./program_name
 
