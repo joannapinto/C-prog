@@ -1,4 +1,3 @@
-C++ Programming 
 This repository contains various C++ programs demonstrating fundamental and advanced concepts in object-oriented programming (OOP), templates, operator overloading, exception handling, and more.
 List of Programs
 
